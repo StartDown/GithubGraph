@@ -1,8 +1,9 @@
-package com.github.graph;
+package com.github.graph.ui;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import com.github.graph.R;
 
 public class MainActivity extends Activity {
 
