@@ -4,23 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.github.graph.R;
 import org.eclipse.egit.github.core.Contributor;
-import org.eclipse.egit.github.core.User;
 
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: yarik
- * Date: 3/30/13
- * Time: 7:26 PM
- * To change this template use File | Settings | File Templates.
- */
-public class ContributorAdapter extends ArrayAdapter<Contributor> {
+public class ContributorAdapter extends SingleTypeAdapter<Contributor> {
 
     public static class UserHolder {
         ImageView avatar;
@@ -31,7 +22,7 @@ public class ContributorAdapter extends ArrayAdapter<Contributor> {
     private LayoutInflater inflater;
 
     public ContributorAdapter(Context context, List<Contributor> objects) {
-        super(context, 0, objects);
+        super(context, R.layout.user_row);
         inflater = LayoutInflater.from(getContext());
     }
 
