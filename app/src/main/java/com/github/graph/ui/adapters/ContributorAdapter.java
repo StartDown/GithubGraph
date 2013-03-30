@@ -17,7 +17,6 @@ public class ContributorAdapter extends SingleTypeAdapter<Contributor> {
     public static class UserHolder {
         ImageView avatar;
         TextView username;
-        TextView info;
     }
 
     private final AvatarLoader avatars;
