@@ -32,8 +32,8 @@ import android.widget.Toast;
 
 import com.github.graph.R;
 import com.github.graph.core.ThrowableLoader;
+import com.github.graph.ui.adapters.SingleTypeAdapter;
 import com.github.graph.util.ToastUtils;
-import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 import com.github.kevinsawicki.wishlist.ViewUtils;
 import roboguice.fragment.RoboFragment;
 

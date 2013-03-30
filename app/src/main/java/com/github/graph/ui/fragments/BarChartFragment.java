@@ -7,29 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import android.widget.ListView;
 import com.github.graph.R;
 import com.github.graph.ui.adapters.ContributorAdapter;
+import com.github.graph.ui.adapters.SingleTypeAdapter;
 import com.github.graph.ui.widget.BarGraphDrawable;
-import org.eclipse.egit.github.core.Contributor;=======
-import com.github.graph.R;
-import com.github.graph.core.loader.ContributorsLoader;
-import com.github.graph.ui.widget.BarGraphDrawable;
-import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 import org.eclipse.egit.github.core.Contributor;
+import com.github.graph.core.loader.ContributorsLoader;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.User;
 
-
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: yarik
- * Date: 3/30/13
- * Time: 5:30 PM
- * To change this template use File | Settings | File Templates.
- */
 public class BarChartFragment extends ItemListFragment<Contributor> {
 
     private ImageView graph;
@@ -54,14 +42,6 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
         return view;
     }
 
-    public void setContributors(List<Contributor> contributors) {
-        ContributorAdapter adapter = new ContributorAdapter(this.getActivity(), contributors);
-        list.setAdapter(adapter);
-
-
-        graph.setBackground(new BarGraphDrawable(contributors));
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         setEmptyText(R.string.no_contributors);
@@ -75,7 +55,7 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
 
     @Override
     protected SingleTypeAdapter<Contributor> createAdapter(List<Contributor> items) {
-        return null;
+        return new ContributorAdapter(getActivity(), items);
     }
 
     @Override
@@ -83,13 +63,9 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
         return new ContributorsLoader(getActivity(), items, stubRepo);
     }
 
-    public void setData(int[] data) {
-        long[][] mData = new long[data.length][1];
-        int[][] colors = new int[data.length][1];
-        for (int i = 0; i < data.length; i++) {
-            mData[i][0] = data[i];
-            colors[i][0] = 0xFF00FF00;
-        }
-        graph.setBackground(new BarGraphDrawable(mData, colors));
+    @Override
+    public void onLoadFinished(Loader<List<Contributor>> loader, List<Contributor> items) {
+        super.onLoadFinished(loader, items);
+        graph.setBackground(new BarGraphDrawable(items));
     }
 }

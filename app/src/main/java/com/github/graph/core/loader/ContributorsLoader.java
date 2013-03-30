@@ -2,7 +2,6 @@ package com.github.graph.core.loader;
 
 import android.content.Context;
 import com.github.graph.core.ThrowableLoader;
-import com.google.inject.Inject;
 import org.eclipse.egit.github.core.Contributor;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.service.RepositoryService;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class ContributorsLoader extends ThrowableLoader<List<Contributor>> {
 
-    @Inject
+//    @Inject
     private RepositoryService service;
 
     private Repository repository;
@@ -19,6 +18,7 @@ public class ContributorsLoader extends ThrowableLoader<List<Contributor>> {
     public ContributorsLoader(Context context, List<Contributor> data, Repository repository) {
         super(context, data);
         this.repository = repository;
+        service = new RepositoryService();
     }
 
     @Override
