@@ -33,6 +33,11 @@
             <artifactId>http-request</artifactId>
             <version>4.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.mylyn.github</groupId>
+            <artifactId>org.eclipse.egit.github.core</artifactId>
+            <version>2.1.2</version>
+        </dependency>
     </dependencies>
 
     <build>
