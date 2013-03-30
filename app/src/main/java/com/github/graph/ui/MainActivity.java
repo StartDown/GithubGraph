@@ -15,7 +15,8 @@ public class MainActivity extends RoboFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.frame, barFragment).commit();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame, barFragment).commit();
     }
 
     @Override

@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/view"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <TextView
         android:id="@android:id/empty"
@@ -34,11 +34,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/pb_loading"
         style="@style/ListSpinner"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

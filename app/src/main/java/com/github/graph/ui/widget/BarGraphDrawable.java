@@ -70,8 +70,8 @@ public class BarGraphDrawable extends PaintDrawable {
     }
 
     private static int calculateColor(float percent){
-        int red = COLOR >> 16 & 0xFF;
-        int green = COLOR >> 8 & 0xFF;
+        int red = (COLOR >> 16) & 0xFF;
+        int green = (COLOR >> 8) & 0xFF;
         int blue = COLOR & 0xFF;
 
         int p = 100 - Math.max(MIN_COLOR, (int)percent*100);
