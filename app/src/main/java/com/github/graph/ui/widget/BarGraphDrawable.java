@@ -34,6 +34,10 @@ public class BarGraphDrawable extends PaintDrawable {
     private static final int SPACING_X = 1;
     private static final int MARGIN = 20;
 
+    private static final int COLOR = 0x0000FF;
+
+    private static final int MIN_COLOR = 30;
+
     private long max = 1;
 
     private List<Contributor> contributors;
@@ -56,12 +60,26 @@ public class BarGraphDrawable extends PaintDrawable {
         float x = 0;
         for (int i = 0; i < contributors.size(); i++) {
             Contributor c = contributors.get(i);
-            paint.setColor(0xFF0000FF);
             float percentage = (float) c.getContributions() / max;
+            paint.setColor(calculateColor(percentage));
             float h = MARGIN + height - Math.max(MIN_HEIGHT, percentage * height);
             canvas.drawRect(x, h, x + width, bounds.bottom, paint);
             canvas.drawText(c.getLogin(),x + MIN_HEIGHT, h - MIN_HEIGHT, black);
             x += width + SPACING_X;
         }
+    }
+
+    private static int calculateColor(float percent){
+        int red = COLOR >> 16 & 0xFF;
+        int green = COLOR >> 8 & 0xFF;
+        int blue = COLOR & 0xFF;
+
+        int p = 100 - Math.max(MIN_COLOR, (int)percent*100);
+
+        red = Math.min(red + (0xFF - red)*p/100, 0xFF);
+        green = Math.min(green + (0xFF - green)*p/100, 0xFF);
+        blue = Math.min(blue + (0xFF - blue)*p/100, 0xFF);
+
+        return 0xFF000000  | (red << 16) | (green << 8) | blue ;
     }
 }

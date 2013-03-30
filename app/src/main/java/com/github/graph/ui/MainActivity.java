@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
 
         cb = new Contributor();
         cb.setLogin("Jesus");
-        cb.setContributions(20);
+        cb.setContributions(70);
         cs.add(cb);
 
         cb = new Contributor();
