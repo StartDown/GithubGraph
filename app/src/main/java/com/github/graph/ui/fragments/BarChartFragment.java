@@ -40,25 +40,11 @@ public class BarChartFragment extends Fragment {
         return view;
     }
 
-    public void setData(int[] data) {
-        long[][] mData = new long[data.length][1];
-        int[][] colors = new int[data.length][1];
-        for (int i = 0; i < data.length; i++) {
-            mData[i][0] = data[i];
-            colors[i][0] = 0xFF00FF00;
-        }
-        graph.setBackground(new BarGraphDrawable(mData, colors));
-    }
-
     public void setContributors(List<Contributor> contributors) {
         ContributorAdapter adapter = new ContributorAdapter(this.getActivity(), contributors);
         list.setAdapter(adapter);
 
 
-        int[] data = new int[contributors.size()];
-        for (int i = 0; i < contributors.size(); i++) {
-            data[i] = contributors.get(i).getContributions();
-        }
-        setData(data);
+        graph.setBackground(new BarGraphDrawable(contributors));
     }
 }

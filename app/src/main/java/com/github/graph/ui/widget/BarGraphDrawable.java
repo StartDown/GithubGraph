@@ -20,6 +20,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.PaintDrawable;
+import org.eclipse.egit.github.core.Contributor;
+
+import java.util.List;
 
 /**
  * Drawable bar graph
@@ -29,45 +32,36 @@ public class BarGraphDrawable extends PaintDrawable {
     private static final int MIN_HEIGHT = 4;
 
     private static final int SPACING_X = 1;
-
-    private final int[][] colors;
-
-    private final long[][] data;
+    private static final int MARGIN = 20;
 
     private long max = 1;
 
-    /**
-     * Create drawable bar graph for data and colors
-     *
-     * @param data
-     * @param colors
-     */
-    public BarGraphDrawable(final long[][] data, final int[][] colors) {
+    private List<Contributor> contributors;
+
+    public BarGraphDrawable(final List<Contributor> contributors) {
         super(android.R.color.transparent);
-        this.data = data;
-        this.colors = colors;
-        for (int i = 0; i < data.length; i++)
-            for (int j = 0; j < data[i].length; j++)
-                max = Math.max(max, data[i][j]);
+        this.contributors = contributors;
+        for (int i = 0; i < contributors.size(); i++)
+            max = Math.max(max, contributors.get(i).getContributions());
     }
+
+    final Paint black = new Paint();
 
     @Override
     public void draw(final Canvas canvas) {
-        final Paint paint = new Paint();
+        final Paint paint = getPaint();
         final Rect bounds = getBounds();
-        final float width = ((float) bounds.width() / data.length) - SPACING_X;
-        final int height = bounds.height();
+        final float width = ((float) bounds.width() / contributors.size()) - SPACING_X;
+        final int height = bounds.height() - MARGIN;
         float x = 0;
-        for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < data[i].length; j++) {
-                paint.setColor(colors[i][j]);
-                float percentage = (float) data[i][j] / max;
-                canvas.drawRect(x, height - Math.max(MIN_HEIGHT, percentage * height), x + width, bounds.bottom, paint);
-            }
+        for (int i = 0; i < contributors.size(); i++) {
+            Contributor c = contributors.get(i);
+            paint.setColor(0xFF0000FF);
+            float percentage = (float) c.getContributions() / max;
+            float h = MARGIN + height - Math.max(MIN_HEIGHT, percentage * height);
+            canvas.drawRect(x, h, x + width, bounds.bottom, paint);
+            canvas.drawText(c.getLogin(),x + MIN_HEIGHT, h - MIN_HEIGHT, black);
             x += width + SPACING_X;
         }
-
-        final Paint p = new Paint();
-        //canvas.drawRect(0, 0, 100, 100, p);
     }
 }

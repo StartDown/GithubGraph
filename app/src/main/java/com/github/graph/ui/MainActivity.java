@@ -5,6 +5,10 @@ import android.app.Activity;
 import android.view.Menu;
 import com.github.graph.R;
 import com.github.graph.ui.fragments.BarChartFragment;
+import org.eclipse.egit.github.core.Contributor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity {
 
@@ -28,6 +32,28 @@ public class MainActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();    //To change body of overridden methods use File | Settings | File Templates.
-        barFragment.setData(new int[]{5, 2, 6, 3, 6, 9, 3});
+
+        List<Contributor> cs = new ArrayList<Contributor>();
+        Contributor cb = new Contributor();
+        cb.setLogin("Foo");
+        cb.setContributions(30);
+        cs.add(cb);
+
+        cb = new Contributor();
+        cb.setLogin("Bar");
+        cb.setContributions(50);
+        cs.add(cb);
+
+        cb = new Contributor();
+        cb.setLogin("Jesus");
+        cb.setContributions(20);
+        cs.add(cb);
+
+        cb = new Contributor();
+        cb.setLogin("Allah");
+        cb.setContributions(80);
+        cs.add(cb);
+
+        barFragment.setContributors(cs);
     }
 }
