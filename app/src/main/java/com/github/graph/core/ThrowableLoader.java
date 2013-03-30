@@ -18,7 +18,6 @@ package com.github.graph.core;
 import android.content.Context;
 import android.util.Log;
 
-
 /**
  * Loader that support throwing an exception when loading in the background
  *
