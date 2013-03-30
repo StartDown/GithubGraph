@@ -1,4 +1,4 @@
-package com.github.graph;
+package com.github.graph.ui.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.github.graph.R;
+import com.github.graph.ui.widget.BarGraphDrawable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,6 +24,7 @@ public class BarChartFragment extends Fragment {
     private TextView repository;
 
     private ImageView avatar;
+    private ImageView graph;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,11 @@ public class BarChartFragment extends Fragment {
         username = (TextView) view.findViewById(R.id.username);
         repository = (TextView) view.findViewById(R.id.repository);
         avatar = (ImageView) view.findViewById(R.id.avatar);
+        graph = (ImageView) view.findViewById(R.id.graph);
+
+        long[][] data = {{1,2}, {3,4}};
+        int[][] colors = {{1,2}, {3,4}};
+        graph.setImageDrawable(new BarGraphDrawable(data,colors));
         return view;
     }
 }

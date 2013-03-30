@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import com.github.graph.R;
+import com.github.graph.ui.fragments.BarChartFragment;
 
 public class MainActivity extends Activity {
 
