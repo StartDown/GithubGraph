@@ -7,9 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.github.graph.R;
+import com.github.graph.ui.adapters.ContributorAdapter;
 import com.github.graph.ui.widget.BarGraphDrawable;
+import org.eclipse.egit.github.core.Contributor;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,5 +48,17 @@ public class BarChartFragment extends Fragment {
             colors[i][0] = 0xFF00FF00;
         }
         graph.setBackground(new BarGraphDrawable(mData, colors));
+    }
+
+    public void setContributors(List<Contributor> contributors) {
+        ContributorAdapter adapter = new ContributorAdapter(this.getActivity(), contributors);
+        list.setAdapter(adapter);
+
+
+        int[] data = new int[contributors.size()];
+        for (int i = 0; i < contributors.size(); i++) {
+            data[i] = contributors.get(i).getContributions();
+        }
+        setData(data);
     }
 }

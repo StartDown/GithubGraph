@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.github.graph.R;
+import org.eclipse.egit.github.core.Contributor;
 import org.eclipse.egit.github.core.User;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
  * Time: 7:26 PM
  * To change this template use File | Settings | File Templates.
  */
-public class UserAdapter extends ArrayAdapter<User> {
+public class ContributorAdapter extends ArrayAdapter<Contributor> {
 
     public static class UserHolder {
         ImageView avatar;
@@ -29,7 +30,7 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     private LayoutInflater inflater;
 
-    public UserAdapter(Context context, List<User> objects) {
+    public ContributorAdapter(Context context, List<Contributor> objects) {
         super(context, 0, objects);
         inflater = LayoutInflater.from(getContext());
     }
@@ -48,8 +49,8 @@ public class UserAdapter extends ArrayAdapter<User> {
             convertView.setTag(holder);
         }
 
-        User user = getItem(position);
-        holder.username.setText(user.getName());
+        Contributor user = getItem(position);
+        holder.username.setText(user.getLogin());
 
 
         return convertView;
