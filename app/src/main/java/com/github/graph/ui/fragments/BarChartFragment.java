@@ -11,6 +11,7 @@ import com.github.graph.R;
 import com.github.graph.ui.adapters.ContributorAdapter;
 import com.github.graph.ui.adapters.SingleTypeAdapter;
 import com.github.graph.ui.widget.BarGraphDrawable;
+import com.github.graph.util.AvatarLoader;
 import org.eclipse.egit.github.core.Contributor;
 import com.github.graph.core.loader.ContributorsLoader;
 import org.eclipse.egit.github.core.Repository;
@@ -25,6 +26,8 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
     private ImageView graph;
 
     private Repository stubRepo;
+
+    private AvatarLoader avatars;
 
     public static BarChartFragment newInstance() {
         return new BarChartFragment();
@@ -50,8 +53,9 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        setEmptyText(R.string.no_contributors);
         super.onActivityCreated(savedInstanceState);
+
+        setEmptyText(R.string.no_contributors);
     }
 
     @Override
@@ -61,7 +65,8 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
 
     @Override
     protected SingleTypeAdapter<Contributor> createAdapter(List<Contributor> items) {
-        return new ContributorAdapter(getActivity(), items);
+        avatars = new AvatarLoader(getActivity());
+        return new ContributorAdapter(getActivity(), items, avatars);
     }
 
     @Override

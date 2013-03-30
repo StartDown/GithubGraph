@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.github.graph.R;
+import com.github.graph.util.AvatarLoader;
 import org.eclipse.egit.github.core.Contributor;
 
 import java.util.List;
@@ -19,11 +20,14 @@ public class ContributorAdapter extends SingleTypeAdapter<Contributor> {
         TextView info;
     }
 
+    private final AvatarLoader avatars;
+
     private LayoutInflater inflater;
 
-    public ContributorAdapter(Context context, List<Contributor> objects) {
+    public ContributorAdapter(Context context, List<Contributor> objects, AvatarLoader avatars) {
         super(context, R.layout.user_row);
         inflater = LayoutInflater.from(getContext());
+        this.avatars = avatars;
     }
 
     @Override
@@ -34,15 +38,15 @@ public class ContributorAdapter extends SingleTypeAdapter<Contributor> {
         } else {
             convertView = inflater.inflate(R.layout.user_row, parent, false);
             holder = new UserHolder();
-            holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
-            holder.username = (TextView) convertView.findViewById(R.id.username);
-            holder.info = (TextView) convertView.findViewById(R.id.info);
+            holder.avatar = (ImageView) convertView.findViewById(R.id.iv_avatar);
+            holder.username = (TextView) convertView.findViewById(R.id.tv_login);
             convertView.setTag(holder);
         }
 
         Contributor user = getItem(position);
         holder.username.setText(user.getLogin());
 
+        avatars.bind(holder.avatar, user);
 
         return convertView;
     }

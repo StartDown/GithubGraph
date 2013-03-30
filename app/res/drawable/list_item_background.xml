@@ -14,23 +14,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ListItem"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/iv_avatar"
-        style="@style/AvatarLarge"/>
+    <item android:drawable="@color/background_selected" android:state_pressed="true"/>
+    <item android:drawable="@color/background"/>
 
-    <TextView
-        android:id="@+id/tv_login"
-        style="@style/ListTitleText"
-        android:layout_width="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingTop="4dp"
-        android:singleLine="true"
-        android:textStyle="normal"/>
-
-</LinearLayout>
+</selector>

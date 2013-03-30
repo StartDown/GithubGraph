@@ -10,8 +10,6 @@ import roboguice.activity.RoboFragmentActivity;
 
 public class MainActivity extends RoboFragmentActivity {
 
-    BarChartFragment barFragment = new BarChartFragment();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
