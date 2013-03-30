@@ -159,8 +159,10 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
 
         int x = 0;
         for (Contributor contributor : items) {
-            mCurrentSeries.add(x, contributor.getContributions());
-            x += 10;
+            if (contributor.getContributions() > 3) {
+                mCurrentSeries.add(x, contributor.getContributions());
+                x += 10;
+            }
         }
 
         mChartView.repaint();
