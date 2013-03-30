@@ -17,6 +17,7 @@ public class ContributorAdapter extends SingleTypeAdapter<Contributor> {
     public static class UserHolder {
         ImageView avatar;
         TextView username;
+        TextView contributions;
     }
 
     private final AvatarLoader avatars;
@@ -39,11 +40,14 @@ public class ContributorAdapter extends SingleTypeAdapter<Contributor> {
             holder = new UserHolder();
             holder.avatar = (ImageView) convertView.findViewById(R.id.iv_avatar);
             holder.username = (TextView) convertView.findViewById(R.id.tv_login);
+            holder.contributions = (TextView) convertView.findViewById(R.id.tv_commits);
             convertView.setTag(holder);
         }
 
         Contributor user = getItem(position);
         holder.username.setText(user.getLogin());
+
+        holder.contributions.setText(getContext().getString(R.string.user_commits, user.getContributions()));
 
         avatars.bind(holder.avatar, user);
 

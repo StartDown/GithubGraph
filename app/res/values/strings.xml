@@ -8,4 +8,6 @@
     <string name="error_cotributors_load">ERROR!!!!!111</string>
     <string name="no_contributors">No contibutors for this repo :(</string>
 
+    <string name="user_commits">%d commits</string>
+
 </resources>
