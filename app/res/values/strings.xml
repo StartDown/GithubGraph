@@ -5,4 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
+    <string name="error_cotributors_load">ERROR!!!!!111</string>
+    <string name="no_contributors">No contibutors for this repo :(</string>
+
 </resources>
