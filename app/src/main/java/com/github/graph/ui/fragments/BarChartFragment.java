@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.github.graph.R;
 import com.github.graph.ui.widget.BarGraphDrawable;
@@ -20,11 +21,8 @@ import com.github.graph.ui.widget.BarGraphDrawable;
 public class BarChartFragment extends Fragment {
 
 
-    private TextView username;
-    private TextView repository;
-
-    private ImageView avatar;
     private ImageView graph;
+    private ListView list;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,14 +32,18 @@ public class BarChartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bar_chart_fragment, container, false);
-        username = (TextView) view.findViewById(R.id.username);
-        repository = (TextView) view.findViewById(R.id.repository);
-        avatar = (ImageView) view.findViewById(R.id.avatar);
         graph = (ImageView) view.findViewById(R.id.graph);
-
-        long[][] data = {{1,2}, {3,4}};
-        int[][] colors = {{1,2}, {3,4}};
-        graph.setImageDrawable(new BarGraphDrawable(data,colors));
+        list = (ListView) view.findViewById(R.id.list);
         return view;
+    }
+
+    public void setData(int[] data) {
+        long[][] mData = new long[data.length][1];
+        int[][] colors = new int[data.length][1];
+        for (int i = 0; i < data.length; i++) {
+            mData[i][0] = data[i];
+            colors[i][0] = 0xFF00FF00;
+        }
+        graph.setBackground(new BarGraphDrawable(mData, colors));
     }
 }

@@ -53,7 +53,7 @@ public class BarGraphDrawable extends PaintDrawable {
 
     @Override
     public void draw(final Canvas canvas) {
-        final Paint paint = getPaint();
+        final Paint paint = new Paint();
         final Rect bounds = getBounds();
         final float width = ((float) bounds.width() / data.length) - SPACING_X;
         final int height = bounds.height();
@@ -66,5 +66,8 @@ public class BarGraphDrawable extends PaintDrawable {
             }
             x += width + SPACING_X;
         }
+
+        final Paint p = new Paint();
+        //canvas.drawRect(0, 0, 100, 100, p);
     }
 }

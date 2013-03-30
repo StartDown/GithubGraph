@@ -8,12 +8,14 @@ import com.github.graph.ui.fragments.BarChartFragment;
 
 public class MainActivity extends Activity {
 
+    BarChartFragment barFragment = new BarChartFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getFragmentManager().beginTransaction().add(R.id.frame, new BarChartFragment()).commit();
+        getFragmentManager().beginTransaction().add(R.id.frame, barFragment).commit();
     }
 
     @Override
@@ -23,4 +25,9 @@ public class MainActivity extends Activity {
         return true;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();    //To change body of overridden methods use File | Settings | File Templates.
+        barFragment.setData(new int[]{5, 2, 6, 3, 6, 9, 3});
+    }
 }
