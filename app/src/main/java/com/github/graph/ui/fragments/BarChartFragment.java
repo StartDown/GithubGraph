@@ -20,9 +20,15 @@ import java.util.List;
 
 public class BarChartFragment extends ItemListFragment<Contributor> {
 
+    public static final String FRAGMENT_TAG = "fragment_bar_chart";
+
     private ImageView graph;
 
     private Repository stubRepo;
+
+    public static BarChartFragment newInstance() {
+        return new BarChartFragment();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
