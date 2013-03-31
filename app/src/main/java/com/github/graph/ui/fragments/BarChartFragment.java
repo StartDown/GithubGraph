@@ -1,17 +1,25 @@
 package com.github.graph.ui.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
+import android.widget.LinearLayout;
 import com.github.graph.R;
 import com.github.graph.ui.adapters.ContributorAdapter;
 import com.github.graph.ui.adapters.SingleTypeAdapter;
-import com.github.graph.ui.widget.BarGraphDrawable;
 import com.github.graph.util.AvatarLoader;
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.chart.BarChart;
+import org.achartengine.chart.PointStyle;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
 import org.eclipse.egit.github.core.Contributor;
 import com.github.graph.core.loader.ContributorsLoader;
 import org.eclipse.egit.github.core.Repository;
@@ -23,7 +31,13 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
 
     public static final String FRAGMENT_TAG = "fragment_bar_chart";
 
-    private ImageView graph;
+    private XYMultipleSeriesDataset mDataset = new XYMultipleSeriesDataset();
+    private XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
+    private XYSeries mCurrentSeries;
+    private XYSeriesRenderer mCurrentRenderer;
+    private GraphicalView mChartView;
+
+    private LinearLayout graph;
 
     private Repository stubRepo;
 
@@ -38,16 +52,16 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
         super.onCreate(savedInstanceState);
 
         final User stubOwner = new User();
-        stubOwner.setLogin("github");
+        stubOwner.setLogin("startdown");
         stubRepo = new Repository();
         stubRepo.setOwner(stubOwner);
-        stubRepo.setName("android");
+        stubRepo.setName("GithubGraph");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bar_chart_fragment, container, false);
-        graph = (ImageView) view.findViewById(R.id.graph);
+        graph = (LinearLayout) view.findViewById(R.id.graph);
         return view;
     }
 
@@ -56,6 +70,8 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
         super.onActivityCreated(savedInstanceState);
 
         setEmptyText(R.string.no_contributors);
+
+        initChart();
     }
 
     @Override
@@ -77,6 +93,57 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
     @Override
     public void onLoadFinished(Loader<List<Contributor>> loader, List<Contributor> items) {
         super.onLoadFinished(loader, items);
-        graph.setBackground(new BarGraphDrawable(items));
+//        graph.setBackground(new BarGraphDrawable(items));
+        updateChart();
+    }
+
+    private void initChart() {
+        mRenderer.setApplyBackgroundColor(true);
+        mRenderer.setBackgroundColor(Color.MAGENTA);
+        mRenderer.setAxisTitleTextSize(16);
+        mRenderer.setChartTitleTextSize(20);
+        mRenderer.setLabelsTextSize(15);
+        mRenderer.setLegendTextSize(15);
+        mRenderer.setMargins(new int[] { 20, 30, 15, 0 });
+        mRenderer.setZoomButtonsVisible(true);
+        mRenderer.setPointSize(5);
+        mRenderer.setLabelsColor(Color.GREEN);
+        mRenderer.setMarginsColor(Color.YELLOW);
+        mRenderer.setGridColor(Color.GREEN);
+        mRenderer.setAxesColor(Color.RED);
+        mRenderer.setXLabelsColor(Color.RED);
+        mRenderer.setAntialiasing(true);
+
+        if (mChartView == null) {
+            mChartView = ChartFactory.getBarChartView(getActivity(), mDataset, mRenderer, BarChart.Type.STACKED);
+            graph.addView(mChartView, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        } else {
+            mChartView.repaint();
+        }
+    }
+
+    private void updateChart() {
+        String seriesTitle = "Series " + (mDataset.getSeriesCount() + 1);
+        XYSeries series = new XYSeries(seriesTitle);
+        mDataset.addSeries(series);
+        mCurrentSeries = series;
+        XYSeriesRenderer renderer = new XYSeriesRenderer();
+        mRenderer.addSeriesRenderer(renderer);
+        renderer.setPointStyle(PointStyle.CIRCLE);
+        renderer.setFillPoints(true);
+        renderer.setDisplayChartValues(true);
+        mCurrentRenderer = renderer;
+        mChartView.repaint();
+
+        int x = 0;
+        for (Contributor contributor : items) {
+            if (contributor.getContributions() > 3) {
+                mCurrentSeries.add(x, contributor.getContributions());
+                x += 1;
+            }
+        }
+
+        mChartView.repaint();
     }
 }
