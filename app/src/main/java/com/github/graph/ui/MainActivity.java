@@ -2,15 +2,10 @@ package com.github.graph.ui;
 
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import com.github.graph.R;
 import com.github.graph.ui.adapters.ContributorsPagerAdapter;
-import com.github.graph.ui.fragments.BarChartFragment;
-import com.github.graph.ui.fragments.ContributorsFragment;
 import roboguice.activity.RoboFragmentActivity;
 
 public class MainActivity extends RoboFragmentActivity
@@ -68,6 +63,10 @@ public class MainActivity extends RoboFragmentActivity
                 .setText("Contributors")
                 .setTag(ContributorsPagerAdapter.TAB_CONTRIBUTORS)
                 .setTabListener(this));
+        actionBar.addTab(actionBar.newTab()
+            .setText("Punchcard")
+            .setTag(ContributorsPagerAdapter.TAB_PUNCHCARD)
+            .setTabListener(this));
     }
 
     @Override
