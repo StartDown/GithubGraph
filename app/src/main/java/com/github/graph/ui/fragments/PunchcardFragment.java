@@ -67,15 +67,14 @@ public class PunchcardFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);    //To change body of overridden methods use File | Settings | File Templates.
-
+    public void onResume() {
+        super.onResume();
         new AsyncTask<Void, Void, List<RepositoryCommit>>() {
             @Override
             protected List<RepositoryCommit> doInBackground(Void... params) {
                 try {
                     GitHubClient client = new GitHubClient();
-                    client.setCredentials("", "");
+                    client.setCredentials("login", "password");
                     return new CommitService(client).getCommits(stubRepo);  //To change body of implemented methods use File | Settings | File Templates.
                 } catch (IOException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -142,6 +141,85 @@ public class PunchcardFragment extends Fragment {
                 }
             }
         }.execute();
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);    //To change body of overridden methods use File | Settings | File Templates.
+
+//        new AsyncTask<Void, Void, List<RepositoryCommit>>() {
+//            @Override
+//            protected List<RepositoryCommit> doInBackground(Void... params) {
+//                try {
+//                    GitHubClient client = new GitHubClient();
+//                    client.setCredentials("atermenji", "hepdtkmn1ara");
+//                    return new CommitService(client).getCommits(stubRepo);  //To change body of implemented methods use File | Settings | File Templates.
+//                } catch (IOException e) {
+//                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//                }
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(List<RepositoryCommit> repositoryCommits) {
+//                if (repositoryCommits != null) {
+//                    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+//
+//                    renderer.setShowLegend(false);
+//                    renderer.setBarSpacing(0.2);
+//                    renderer.setAntialiasing(true);
+//                    renderer.setShowGrid(true);
+//
+//                    XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+//
+//                    int[][] card = new int[7][24];
+//
+//                    for(RepositoryCommit commit: repositoryCommits){
+//                        Date date = commit.getCommit().getCommitter().getDate();
+//                        Calendar cal = new GregorianCalendar();
+//                        cal.setTime(date);
+//                        int day = cal.get(Calendar.DAY_OF_WEEK) - 1;
+//                        int time = cal.get(Calendar.HOUR_OF_DAY) % 24;
+//                        card[day][time]++;
+//                    }
+//                    for(int i=0;i<7;i++){
+//
+//                        XYValueSeries s = new XYValueSeries("punchcard "+i);
+//
+//                        for(int j = 0; j<23;j++){
+//                            s.add(j,i,card[i][j]);
+//                        }
+//                        dataset.addSeries(s);
+//
+//                        XYSeriesRenderer xy = new XYSeriesRenderer();
+//                        xy.setColor(0xFF0000FF);
+//                        renderer.addSeriesRenderer(xy);
+//
+//                    }
+//
+//                    renderer.addYTextLabel(0, "Sundey");
+//                    renderer.addYTextLabel(1, "Mondey");
+//                    renderer.addYTextLabel(2, "Tuesday");
+//                    renderer.addYTextLabel(3, "Wednesday");
+//                    renderer.addYTextLabel(4, "Thursday");
+//                    renderer.addYTextLabel(5, "Friday");
+//                    renderer.addYTextLabel(6, "Saturday");
+//
+//                    renderer.setYAxisMin(-0.5);
+//                    renderer.setYAxisMax(7.5);
+//                    renderer.setXAxisMin(-0.5);
+//                    renderer.setXAxisMax(24.5);
+//
+//                    GraphicalView q = ChartFactory.getBubbleChartView(getActivity(), dataset, renderer);
+//                    graphLayout.removeAllViews();
+//                    graphLayout.addView(q);
+//
+//                    graphLayout.setVisibility(View.VISIBLE);
+//
+//                }
+//            }
+//        }.execute();
 
 
     }
