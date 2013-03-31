@@ -6,20 +6,16 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import android.widget.LinearLayout;
-import android.widget.Toast;
 import com.github.graph.R;
 import com.github.graph.ui.adapters.ContributorAdapter;
 import com.github.graph.ui.adapters.SingleTypeAdapter;
-import com.github.graph.ui.widget.BarGraphDrawable;
 import com.github.graph.util.AvatarLoader;
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.BarChart;
 import org.achartengine.chart.PointStyle;
-import org.achartengine.model.SeriesSelection;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
@@ -102,9 +98,8 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
     }
 
     private void initChart() {
-        // set some properties on the main renderer
         mRenderer.setApplyBackgroundColor(true);
-        mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
+        mRenderer.setBackgroundColor(Color.MAGENTA);
         mRenderer.setAxisTitleTextSize(16);
         mRenderer.setChartTitleTextSize(20);
         mRenderer.setLabelsTextSize(15);
@@ -112,33 +107,17 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
         mRenderer.setMargins(new int[] { 20, 30, 15, 0 });
         mRenderer.setZoomButtonsVisible(true);
         mRenderer.setPointSize(5);
+        mRenderer.setLabelsColor(Color.GREEN);
+        mRenderer.setMarginsColor(Color.YELLOW);
+        mRenderer.setGridColor(Color.GREEN);
+        mRenderer.setAxesColor(Color.RED);
+        mRenderer.setXLabelsColor(Color.RED);
+        mRenderer.setAntialiasing(true);
 
         if (mChartView == null) {
             mChartView = ChartFactory.getBarChartView(getActivity(), mDataset, mRenderer, BarChart.Type.STACKED);
-             //getBarChartView(getActivity(), mDataset, mRenderer);
-
-            // enable the chart click events
-            mRenderer.setClickEnabled(true);
-            mRenderer.setSelectableBuffer(10);
-            mChartView.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    // handle the click event on the chart
-                    SeriesSelection seriesSelection = mChartView.getCurrentSeriesAndPoint();
-                    if (seriesSelection == null) {
-                        Toast.makeText(getActivity(), "No chart element", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // display information of the clicked point
-                        Toast.makeText(
-                                getActivity(),
-                                "Chart element in series index " + seriesSelection.getSeriesIndex()
-                                        + " data point index " + seriesSelection.getPointIndex() + " was clicked"
-                                        + " closest point value X=" + seriesSelection.getXValue() + ", Y="
-                                        + seriesSelection.getValue(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-            graph.addView(mChartView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
-                    LinearLayout.LayoutParams.FILL_PARENT));
+            graph.addView(mChartView, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         } else {
             mChartView.repaint();
         }
@@ -161,7 +140,7 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
         for (Contributor contributor : items) {
             if (contributor.getContributions() > 3) {
                 mCurrentSeries.add(x, contributor.getContributions());
-                x += 10;
+                x += 1;
             }
         }
 
