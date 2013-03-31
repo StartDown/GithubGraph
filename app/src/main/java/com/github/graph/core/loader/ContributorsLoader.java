@@ -4,6 +4,7 @@ import android.content.Context;
 import com.github.graph.core.ThrowableLoader;
 import org.eclipse.egit.github.core.Contributor;
 import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import java.util.List;
@@ -18,7 +19,9 @@ public class ContributorsLoader extends ThrowableLoader<List<Contributor>> {
     public ContributorsLoader(Context context, List<Contributor> data, Repository repository) {
         super(context, data);
         this.repository = repository;
-        service = new RepositoryService();
+        GitHubClient client = new GitHubClient();
+        client.setCredentials("login", "password");
+        service = new RepositoryService(client);
     }
 
     @Override
