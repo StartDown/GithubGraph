@@ -18,7 +18,7 @@ public class MainActivity extends RoboFragmentActivity {
         FragmentManager fm = getSupportFragmentManager();
         if (fm.findFragmentByTag(BarChartFragment.FRAGMENT_TAG) == null) {
             Fragment fragment = BarChartFragment.newInstance();
-            fm.beginTransaction().add(R.id.frame, fragment, BarChartFragment.FRAGMENT_TAG).commit();
+            fm.beginTransaction().replace(R.id.frame, fragment, BarChartFragment.FRAGMENT_TAG).commit();
         }
     }
 
