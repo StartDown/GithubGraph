@@ -56,10 +56,10 @@ public class BarChartFragment extends ItemListFragment<Contributor> {
         super.onCreate(savedInstanceState);
 
         final User stubOwner = new User();
-        stubOwner.setLogin("github");
+        stubOwner.setLogin("startdown");
         stubRepo = new Repository();
         stubRepo.setOwner(stubOwner);
-        stubRepo.setName("android");
+        stubRepo.setName("GithubGraph");
     }
 
     @Override
